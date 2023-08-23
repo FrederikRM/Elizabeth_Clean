@@ -3,6 +3,7 @@
     <div class="max-w-6xl flex flex-col my-10 mx-auto">
       <div class="flex items-end justify-between my-5">
         <h1 class="text-3xl">Your cart</h1>
+
         <a
           href="{{ routes.all_products_collection_url }}"
           class="text-blue-600 hover:text-blue-800 font-medium underline"
@@ -98,6 +99,8 @@
       </form>
     </div>
   </div>
+
+  {% comment %} ROUTES TO ALL PRODUCTS IF CART DOESN'T CONTAIN ANY PRODUCTS {% endcomment %}
 {% else %}
   <div class="max-w-6xl h-60 my-4 flex items-center justify-center">
     <div class="text-center">
