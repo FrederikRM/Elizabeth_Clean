@@ -1,4 +1,8 @@
-<article class="py-8" itemscope itemtype="https://schema.org/BlogPosting">
+<article
+  class="py-8"
+  itemscope
+  itemtype="https://schema.org/BlogPosting"
+>
   {% for block in section.blocks %}
     {% case block.type %}
       {% when 'article_title' %}
@@ -13,7 +17,11 @@
 
       {% when 'article_author' %}
         <div class="flex items-center justify-center">
-          <div class="max-w-7 text-center" itemscope itemtype="https://schema.org/Person">
+          <div
+            class="max-w-7 text-center"
+            itemscope
+            itemtype="https://schema.org/Person"
+          >
             {% if section.settings.enable_author %}
               <small itemprop="author">{{ article.author }}</small>
             {% endif %}
@@ -165,30 +173,29 @@
 {% comment %} JSON Schema for SEO {% endcomment %}
 <script type="application/ld+json">
   {
-    "@context": 'https://schema.org',
-    "@type": "BlogPosting",
-    "headline": {{ article.title | json }},
-    "articleBody": {{ article.content | strip_html | json }},
-    {% if article.excerpt != blank %}
-      "description": {{ article.excerpt | strip_html | json }},
-    {% endif %}
+  "@context": 'https://schema.org',
+      "@type": "BlogPosting",
+      "headline": {{ article.title | json }},
+  "articleBody": {{ article.content | strip_html | json }},
+  {% if article.excerpt != blank %}
+    "description": {{ article.excerpt | strip_html | json }},
+  {% endif %}
 
-    {% if article.image %}
+  {% if article.image %}
     "image": [
-      {{ article.image | img_url: "medium" | prepend: 'https:' | json }}
+    {{ article.image | img_url: "medium" | prepend: 'https:' | json }}
     ],
-    {% endif %}
-    "datePublished": {{ article.published_at | date: format: "default" | json }},
-    "dateCreated": {{ article.created_at | date: format: "default" | json }},
-    "author": {
-      "@type": "Person",
-      "name": {{ article.author | json }}
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": {{ shop.name | json }}
-    }
-
+  {% endif %}
+  "datePublished": {{ article.published_at | date: format: "default" | json }},
+  "dateCreated": {{ article.created_at | date: format: "default" | json }},
+  "author": {
+        "@type": "Person",
+        "name": {{ article.author | json }}
+  },
+  "publisher": {
+        "@type": "Organization",
+        "name": {{ shop.name | json }}
+  }
   }
 </script>
 
