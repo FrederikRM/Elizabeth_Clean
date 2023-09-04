@@ -1,7 +1,4 @@
-<link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"
->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css">
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
 {% assign selected_variant = product.selected_or_first_available_variant %}
@@ -13,6 +10,7 @@
     top: auto !important;
     height: 20px !important;
   }
+
   ,
   .swiper-button-prev::after,
   .swiper-button-next::after {
@@ -23,6 +21,7 @@
     color: black;
     bottom: 0 !important;
   }
+
   .swiper-pagination-bullet-active {
     background: black !important;
   }
@@ -32,9 +31,10 @@
   }
 </style>
 
-{% comment %} PRODUCT MEDIA CONTAINER {% endcomment %}
+{% comment %} PRODUCT INFORMATION CONTAINER {% endcomment %}
 <div class="max-w-6xl mx-auto my-8">
   <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+    {% comment %} PRODUCT MEDIA CONTAINER {% endcomment %}
     <div class="product--medias">
       <div class="hidden md:block">
         {% for media in product.media %}
@@ -63,13 +63,10 @@
       </div>
     </div>
 
+    {% comment %} PRODUCT TEXT CONTAINER {% endcomment %}
     <div class="product--information sticky top-5 p-2">
       {% form 'product', product %}
-        <input
-          type="hidden"
-          name="id"
-          value="{{ selected_variant.id }}"
-        >
+        <input type="hidden" name="id" value="{{ selected_variant.id }}">
         <div class="my-3">
           <span class="text-xs text-gray-500">{{ product.vendor }}</span>
         </div>
@@ -78,14 +75,10 @@
         </div>
 
         <div class="my-3">
-          <span
-            class="text-base text-gray-500 line-through"
-          >
+          <span class="text-base text-gray-500 line-through">
             {{- selected_variant.compare_at_price | money -}}
           </span>
-          <span
-            class="text-lg text-gray-900"
-          >
+          <span class="text-lg text-gray-900">
             {{- selected_variant.price | money -}}
           </span>
           {% if selected_variant.price < selected_variant.compare_at_price %}
@@ -99,10 +92,7 @@
         {% comment %} VARIANT SELECTOR {% endcomment %}
         <div class="my-3">
           {% unless product.has_only_default_variant %}
-            <div
-              data-url="{{ product.url }}"
-              data-section="{{ section.id }}"
-            >
+            <div data-url="{{ product.url }}" data-section="{{ section.id }}">
               {% for option in product.options_with_values %}
                 <label for="Option-{{ section.id }}-{{ forloop.index0 }}">{{ option.name }}</label>
                 <div class="my-2">
@@ -151,6 +141,7 @@
           </p>
         </div>
 
+        {% comment %} ADD TO CART BUTTON {% endcomment %}
         <div class="my-3">
           <button
             type="submit"
@@ -173,6 +164,7 @@
   </div>
 </div>
 
+{% comment %} SWIPER {% endcomment %}
 <script>
   const swiper = new Swiper('.swiper', {
     direct: 'horizontal',
@@ -187,3 +179,45 @@
     },
   });
 </script>
+{% schema %}
+{
+  "name": "Product",
+  "blocks": [
+    {
+      "type": "vendor",
+      "name": "Vendor",
+      "limit": 1
+    },
+    {
+      "type": "title",
+      "name": "Title",
+      "limit": 1
+    },
+    {
+      "type": "price",
+      "name": "Price",
+      "limit": 1
+    },
+    {
+      "type": "variant_selector",
+      "name": "Variant Selector",
+      "limit": 1
+    },
+    {
+      "type": "quantity",
+      "name": "Quantity",
+      "limit": 1
+    },
+    {
+      "type": "description",
+      "name": "Description",
+      "limit": 1
+    },
+    {
+      "type": "checkout_buttons",
+      "name": "Checkout Buttons",
+      "limit": 1
+    }
+  ]
+}
+{% endschema %}
